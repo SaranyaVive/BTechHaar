@@ -1,4 +1,6 @@
 using BTechHaar.Data.Context;
+using BTechHaar.Data.Repository;
+using BTechHaar.Web.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
@@ -11,6 +13,14 @@ builder.Services.AddMvc();
 builder.Services.AddDbContext<BTechDBContext>(item => item.UseSqlServer(connectionString), ServiceLifetime.Transient);
 
 builder.Services.AddControllers();
+
+/* Dependancy Resolved Here */
+
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

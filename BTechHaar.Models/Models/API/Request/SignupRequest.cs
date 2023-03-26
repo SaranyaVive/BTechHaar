@@ -1,6 +1,6 @@
-﻿using Microsoft.Build.Framework;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BTechHaar.Web.ViewModels.API.Request
+namespace BTechHaar.Models.API.Request
 {
     public class SignupRequest
     {
@@ -13,6 +13,8 @@ namespace BTechHaar.Web.ViewModels.API.Request
         [Required]
         public string MobileNumber { get; set; }
         public string MPin { get; set; } = "";
+        public string DeviceId { get; set; }
+        public int DeviceType { get; set; }
 
     }
 }

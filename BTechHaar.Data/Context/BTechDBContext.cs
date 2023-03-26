@@ -14,9 +14,9 @@ namespace BTechHaar.Data.Context
         {
         }
 
-        DbSet<Users> Users { get; set; }
-        DbSet<UserLog> UserLogs { get; set; }
-        DbSet<UserDevice> UserDevices { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<UserDevice> UserDevices { get; set; }
 
     }
 }

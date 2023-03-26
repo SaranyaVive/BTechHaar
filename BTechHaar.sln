@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTechHaar.Web", "BTechHaar\BTechHaar.Web.csproj", "{6D139CA5-9B3B-4FB5-94CE-9A63486C230D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTechHaar.Data", "BTechHaar.Data\BTechHaar.Data.csproj", "{CE50C987-8BEA-4A9E-9F68-DA15AC39E782}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTechHaar.Data", "BTechHaar.Data\BTechHaar.Data.csproj", "{CE50C987-8BEA-4A9E-9F68-DA15AC39E782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTechHaar.Models", "BTechHaar.Models\BTechHaar.Models.csproj", "{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CE50C987-8BEA-4A9E-9F68-DA15AC39E782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE50C987-8BEA-4A9E-9F68-DA15AC39E782}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE50C987-8BEA-4A9E-9F68-DA15AC39E782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
