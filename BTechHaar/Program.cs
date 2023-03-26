@@ -17,8 +17,10 @@ builder.Services.AddControllers();
 /* Dependancy Resolved Here */
 
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserLogService, UserLogService>();
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IUserLogRepository, UserLogRepository>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
