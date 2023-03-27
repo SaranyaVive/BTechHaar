@@ -1,10 +1,10 @@
 ﻿using BTechHaar.Models.API.Request;
-using BTechHaar.Web.Services;
+using BTechHaar.Main.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace BTechHaar.Web.Controllers.API
+namespace BTechHaar.Main.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]

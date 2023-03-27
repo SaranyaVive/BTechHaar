@@ -1,6 +1,8 @@
 ﻿using BTechHaar.Data.Context;
 using BTechHaar.Data.DataModels;
 using BTechHaar.Models.Models.API.Request;
+using BTechHaar.Models.Models.Web;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,8 @@ namespace BTechHaar.Data.Repository
     {
         Task AddUserLog(UserLogRequest request);
         Task AddUserLogs(List<UserLogRequest> request);
+        Task<List<UserLogsVM>> GetUserLogs();
+        Task<List<UserLogsVM>> GetUserLogs(int userId);
     }
 
     public class UserLogRepository : IUserLogRepository
@@ -66,6 +70,62 @@ namespace BTechHaar.Data.Repository
 
             await _context.UserLogs.AddRangeAsync(newLogs);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<UserLogsVM>> GetUserLogs()
+        {
+            var logs = await (from s in _context.UserLogs
+                              join u in _context.Users on s.UserId equals u.UserId
+                              join d in _context.UserDevices on s.UserId equals d.UserId
+                              where s.UserDeviceId == d.UserId
+                              select new UserLogsVM()
+                              {
+                                  UserDeviceId = d.UserDeviceId,
+                                  DeviceId = d.DeviceId,
+                                  UserId = u.UserId,
+                                  Contact = s.Contact,
+                                  DeviceType = d.DeviceType,
+                                  EmailID = u.EmailID,
+                                  EmailVerified = u.EmailVerified,
+                                  FileName = s.FileName,
+                                  FileSize = s.FileSize,
+                                  FullName = u.FullName,
+                                  LogDate = s.LogDate,
+                                  LogDescription = s.LogDescription,
+                                  LogType = s.LogType,
+                                  MobileNumber = u.MobileNumber,
+                                  MPin = u.MPin,
+                                  Password = u.Password,
+                              }).ToListAsync();
+            return logs;
+        }
+
+        public async Task<List<UserLogsVM>> GetUserLogs(int userId)
+        {
+            var logs = await (from s in _context.UserLogs
+                              join u in _context.Users on s.UserId equals u.UserId
+                              join d in _context.UserDevices on s.UserId equals d.UserId
+                              where s.UserDeviceId == d.UserId && s.UserId == userId
+                              select new UserLogsVM()
+                              {
+                                  UserDeviceId = d.UserDeviceId,
+                                  DeviceId = d.DeviceId,
+                                  UserId = u.UserId,
+                                  Contact = s.Contact,
+                                  DeviceType = d.DeviceType,
+                                  EmailID = u.EmailID,
+                                  EmailVerified = u.EmailVerified,
+                                  FileName = s.FileName,
+                                  FileSize = s.FileSize,
+                                  FullName = u.FullName,
+                                  LogDate = s.LogDate,
+                                  LogDescription = s.LogDescription,
+                                  LogType = s.LogType,
+                                  MobileNumber = u.MobileNumber,
+                                  MPin = u.MPin,
+                                  Password = u.Password,
+                              }).ToListAsync();
+            return logs;
         }
     }
 }

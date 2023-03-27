@@ -1,4 +1,4 @@
-﻿namespace BTechHaar.Web.Helpers.Enums
+﻿namespace BTechHaar.Main.Helpers.Enums
 {
     public enum DeviceType
     {

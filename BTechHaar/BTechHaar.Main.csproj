@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Web\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BTechHaar.Data\BTechHaar.Data.csproj" />
     <ProjectReference Include="..\BTechHaar.Models\BTechHaar.Models.csproj" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 using BTechHaar.Models.API.Request;
 using BTechHaar.Models.API.Response;
 
-namespace BTechHaar.Web.Services
+namespace BTechHaar.Main.Services
 {
     public interface IAccountService
     {
