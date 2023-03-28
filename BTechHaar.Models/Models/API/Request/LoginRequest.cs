@@ -2,8 +2,8 @@
 {
     public class LoginRequest
     {
-        public string DeviceId { get; set; }
-        public string MPin { get; set; }
+        public string EmailID { get; set; }
+        //public string MPin { get; set; }
 
     }
 }

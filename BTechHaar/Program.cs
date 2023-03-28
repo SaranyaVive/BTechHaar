@@ -21,6 +21,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserLogService, UserLogService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserLogRepository, UserLogRepository>();
@@ -35,11 +36,11 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
   app.UseSwagger();
   app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 //app.UseDefaultFiles();
