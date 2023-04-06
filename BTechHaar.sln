@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTechHaar.Web", "BTechHaar\BTechHaar.Web.csproj", "{6D139CA5-9B3B-4FB5-94CE-9A63486C230D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTechHaar.Main", "BTechHaar\BTechHaar.Main.csproj", "{6D139CA5-9B3B-4FB5-94CE-9A63486C230D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTechHaar.Data", "BTechHaar.Data\BTechHaar.Data.csproj", "{CE50C987-8BEA-4A9E-9F68-DA15AC39E782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTechHaar.Models", "BTechHaar.Models\BTechHaar.Models.csproj", "{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTechHaar.Models", "BTechHaar.Models\BTechHaar.Models.csproj", "{7A6A0B43-6B40-4BB6-A6B4-921D9EE934C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

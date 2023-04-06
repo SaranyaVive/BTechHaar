@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.15">
       <PrivateAssets>all</PrivateAssets>
@@ -18,12 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Web\" />
+    <ProjectReference Include="..\BTechHaar.Data\BTechHaar.Data.csproj" />
+    <ProjectReference Include="..\BTechHaar.Models\BTechHaar.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BTechHaar.Data\BTechHaar.Data.csproj" />
-    <ProjectReference Include="..\BTechHaar.Models\BTechHaar.Models.csproj" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

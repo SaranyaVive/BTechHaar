@@ -2,6 +2,7 @@
 using BTechHaar.Data.DataModels;
 using BTechHaar.Models.API.Request;
 using BTechHaar.Models.API.Response;
+using BTechHaar.Models.Models.API.Response;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace BTechHaar.Data.Repository
     {
         Task<LoginResponse> CheckValidLogin(LoginRequest request);
         Task<SignUpResponse> RegisterUser(SignupRequest request);
-        Task VerifyEmail(int userId);
+        Task<EmailVerifiedResponse> VerifyEmail(int userId);
     }
 
 
@@ -35,15 +36,37 @@ namespace BTechHaar.Data.Repository
         {
             var user = await (from s in _context.Users
                               join d in _context.UserDevices on s.UserId equals d.UserId
-                              where s.MPin == request.MPin && d.DeviceId == request.DeviceId
+                              where // s.MPin == request.MPin && 
+                              s.EmailID == request.EmailID
                               select new LoginResponse()
                               {
+                                  EmailId = s.EmailID,
                                   DeviceId = d.DeviceId,
-                                  IsValidUser = true
+                                  IsValidUser = true,
+                                  IsEmailVerified = s.EmailVerified,
+                                  ErrorMessage = string.Empty,
+                                  OTPText = GenerateRandomOTP(6, saAllowedCharacters),
+                                  UserId = s.UserId
                               }).FirstOrDefaultAsync();
+
             if (user == null)
             {
-                return new LoginResponse() { DeviceId = request.DeviceId, IsValidUser = false };
+                user = new LoginResponse()
+                {
+                    OTPText = "",
+                    IsValidUser = false,
+                    ErrorMessage = "User not found. Kindly Register."
+                };
+                return user;
+            }
+            else if (!user.IsEmailVerified)
+            {
+                user.OTPText = GenerateRandomOTP(6, saAllowedCharacters);
+                user.EmailId = request.EmailID;
+                user.IsValidUser = false;
+                user.UserId = user.UserId;
+                user.ErrorMessage = "Email not verified. Kindly verify the OTP.";
+                return user;
             }
 
             return user;
@@ -52,12 +75,25 @@ namespace BTechHaar.Data.Repository
         public async Task<SignUpResponse> RegisterUser(SignupRequest request)
         {
             var users = await _context.Users.ToListAsync();
-            var isEmailExist = users.Where(x => x.EmailID == request.EmailID).Any();
+            var isEmailExist = users.Where(x => x.EmailID == request.EmailID && x.EmailVerified).Any();
             if (isEmailExist)
             {
                 return new SignUpResponse()
                 {
-                    ErrorMessage = "Email already exist"
+                    IsEmailVerified = true,
+                    ErrorMessage = "Email already exist. Please login."
+                };
+            }
+
+            var emailExist = users.Where(x => x.EmailID == request.EmailID && !x.EmailVerified);
+            if (emailExist.Any())
+            {
+                return new SignUpResponse()
+                {
+                    EmailId = request.EmailID,
+                    OTPText = GenerateRandomOTP(6, saAllowedCharacters),
+                    ErrorMessage = "Email already exist. Verify with OTP",
+                    UserId = emailExist.FirstOrDefault().UserId
                 };
             }
             var isMobileNumberExist = users.Where(x => x.MobileNumber == request.MobileNumber).Any();
@@ -65,7 +101,7 @@ namespace BTechHaar.Data.Repository
             {
                 return new SignUpResponse()
                 {
-                    ErrorMessage = "MobileNumber already exist"
+                    ErrorMessage = "Mobile Number already exist"
                 };
             }
             var isUserAlreadyExist = users.Where(x => x.EmailID == request.EmailID && x.MobileNumber == request.MobileNumber && x.EmailVerified).Any();
@@ -73,7 +109,8 @@ namespace BTechHaar.Data.Repository
             {
                 return new SignUpResponse()
                 {
-                    ErrorMessage = "User already exist"
+                    IsEmailVerified = true,
+                    ErrorMessage = "Account already exist. Kindly Login."
                 };
             }
             var isEmailNotVerified = users.FirstOrDefault(x => x.EmailID == request.EmailID && x.MobileNumber == request.MobileNumber && !x.EmailVerified);
@@ -81,7 +118,8 @@ namespace BTechHaar.Data.Repository
             {
                 return new SignUpResponse()
                 {
-                    OTPText = GenerateRandomOTP(4, saAllowedCharacters),
+                    OTPText = GenerateRandomOTP(6, saAllowedCharacters),
+                    EmailId = request.EmailID,
                     UserId = isEmailNotVerified.UserId
                 };
             }
@@ -90,7 +128,7 @@ namespace BTechHaar.Data.Repository
                 EmailID = request.EmailID,
                 MobileNumber = request.MobileNumber,
                 FullName = request.FullName,
-                MPin = request.MPin,
+                // MPin = request.MPin,
                 EmailVerified = false
             };
 
@@ -109,20 +147,27 @@ namespace BTechHaar.Data.Repository
 
             return new SignUpResponse()
             {
-                OTPText = GenerateRandomOTP(4, saAllowedCharacters),
+                EmailId = request.EmailID,
+                OTPText = GenerateRandomOTP(6, saAllowedCharacters),
                 UserId = newUser.UserId,
             };
 
         }
 
-        public async Task VerifyEmail(int userId)
+        public async Task<EmailVerifiedResponse> VerifyEmail(int userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
             if (user != null)
             {
                 user.EmailVerified = true;
                 await _context.SaveChangesAsync();
+                return new EmailVerifiedResponse()
+                {
+                    IsValidUser = true,
+                    UserId = user.UserId
+                };
             }
+            else { return new EmailVerifiedResponse() { IsValidUser = false }; }
         }
 
         private string GenerateRandomOTP(int iOTPLength, string[] saAllowedCharacters)

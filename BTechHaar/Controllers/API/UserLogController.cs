@@ -1,9 +1,9 @@
 ﻿using BTechHaar.Models.Models.API.Request;
-using BTechHaar.Web.Services;
+using BTechHaar.Main.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BTechHaar.Web.Controllers.API
+namespace BTechHaar.Main.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]

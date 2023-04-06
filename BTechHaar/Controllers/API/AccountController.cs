@@ -1,10 +1,11 @@
 ﻿using BTechHaar.Models.API.Request;
-using BTechHaar.Web.Services;
+using BTechHaar.Main.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using BTechHaar.Models.Models.API.Response;
 
-namespace BTechHaar.Web.Controllers.API
+namespace BTechHaar.Main.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -18,7 +19,7 @@ namespace BTechHaar.Web.Controllers.API
         }
 
         [HttpPost]
-        [Route("userauthenticate")]
+        [Route("userlogin")]
         public async Task<IActionResult> UserLogin(LoginRequest request)
         {
             try
@@ -49,13 +50,29 @@ namespace BTechHaar.Web.Controllers.API
         }
 
         [HttpPost]
-        [Route("verifyemail")]
+        [Route("emailverified")]
         public async Task<IActionResult> VerifyEmail(int UserId)
         {
             try
             {
-                await _accountService.VerifyEmail(UserId);
-                return Ok();
+                EmailVerifiedResponse response= await _accountService.VerifyEmail(UserId);
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("resendotp")]
+        public async Task<IActionResult> ResendOTP(LoginRequest request)
+        {
+            try
+            {
+                var userchek = await _accountService.CheckValidLogin(request);
+                return Ok(userchek);
 
             }
             catch (Exception ex)
