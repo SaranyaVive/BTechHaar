@@ -1,6 +1,7 @@
 ﻿using BTechHaar.Data.Repository;
 using BTechHaar.Models.API.Request;
 using BTechHaar.Models.API.Response;
+using BTechHaar.Models.Models.API.Response;
 
 namespace BTechHaar.Main.Services
 {
@@ -8,7 +9,7 @@ namespace BTechHaar.Main.Services
     {
         Task<LoginResponse> CheckValidLogin(LoginRequest request);
         Task<SignUpResponse> RegisterUser(SignupRequest request);
-        Task VerifyEmail(int userId);
+        Task<EmailVerifiedResponse> VerifyEmail(int userId);
     }
 
 
@@ -42,14 +43,18 @@ namespace BTechHaar.Main.Services
             var userRegister = await _accountRepository.RegisterUser(request);
             if(!string.IsNullOrEmpty(userRegister.OTPText) && !string.IsNullOrEmpty(userRegister.EmailId))
             {
-                await _emailService.SendOTPEmail(userRegister.EmailId, userRegister.OTPText);
+               var errorMailSending = await _emailService.SendOTPEmail(userRegister.EmailId, userRegister.OTPText);
+                if (!string.IsNullOrEmpty(errorMailSending))
+                {
+
+                }
             }
             return userRegister;
         }
 
-        public async Task VerifyEmail(int userId)
+        public async Task<EmailVerifiedResponse> VerifyEmail(int userId)
         {
-            await _accountRepository.VerifyEmail(userId);
+            return await _accountRepository.VerifyEmail(userId);
         }
     }
 }

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\BTechHaar.Models\BTechHaar.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
 </Project>

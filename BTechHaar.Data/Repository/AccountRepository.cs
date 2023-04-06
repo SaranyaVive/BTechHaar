@@ -2,6 +2,7 @@
 using BTechHaar.Data.DataModels;
 using BTechHaar.Models.API.Request;
 using BTechHaar.Models.API.Response;
+using BTechHaar.Models.Models.API.Response;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace BTechHaar.Data.Repository
     {
         Task<LoginResponse> CheckValidLogin(LoginRequest request);
         Task<SignUpResponse> RegisterUser(SignupRequest request);
-        Task VerifyEmail(int userId);
+        Task<EmailVerifiedResponse> VerifyEmail(int userId);
     }
 
 
@@ -44,7 +45,8 @@ namespace BTechHaar.Data.Repository
                                   IsValidUser = true,
                                   IsEmailVerified = s.EmailVerified,
                                   ErrorMessage = string.Empty,
-                                  OTPText = GenerateRandomOTP(6, saAllowedCharacters)
+                                  OTPText = GenerateRandomOTP(6, saAllowedCharacters),
+                                  UserId = s.UserId
                               }).FirstOrDefaultAsync();
 
             if (user == null)
@@ -62,6 +64,7 @@ namespace BTechHaar.Data.Repository
                 user.OTPText = GenerateRandomOTP(6, saAllowedCharacters);
                 user.EmailId = request.EmailID;
                 user.IsValidUser = false;
+                user.UserId = user.UserId;
                 user.ErrorMessage = "Email not verified. Kindly verify the OTP.";
                 return user;
             }
@@ -151,14 +154,20 @@ namespace BTechHaar.Data.Repository
 
         }
 
-        public async Task VerifyEmail(int userId)
+        public async Task<EmailVerifiedResponse> VerifyEmail(int userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
             if (user != null)
             {
                 user.EmailVerified = true;
                 await _context.SaveChangesAsync();
+                return new EmailVerifiedResponse()
+                {
+                    IsValidUser = true,
+                    UserId = user.UserId
+                };
             }
+            else { return new EmailVerifiedResponse() { IsValidUser = false }; }
         }
 
         private string GenerateRandomOTP(int iOTPLength, string[] saAllowedCharacters)

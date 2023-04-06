@@ -3,6 +3,7 @@ using BTechHaar.Main.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using BTechHaar.Models.Models.API.Response;
 
 namespace BTechHaar.Main.Controllers.API
 {
@@ -54,8 +55,8 @@ namespace BTechHaar.Main.Controllers.API
         {
             try
             {
-                await _accountService.VerifyEmail(UserId);
-                return Ok();
+                EmailVerifiedResponse response= await _accountService.VerifyEmail(UserId);
+                return Ok(response);
 
             }
             catch (Exception ex)

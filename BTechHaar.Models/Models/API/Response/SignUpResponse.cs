@@ -7,6 +7,7 @@
         public string EmailId { get; set; }
         public int? UserId { get; set; }
         public bool IsEmailVerified { get; set; } = false;
+        public string ErrorEmail { get; set; }
 
     }
 }
