@@ -27,4 +27,8 @@
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\HaarLogo.png" />
+  </ItemGroup>
+
 </Project>
