@@ -9,5 +9,7 @@
         public string ErrorMessage { get; set; } = string.Empty;
         public string OTPText { get; set; } = string.Empty;
         public int UserId { get; set; }
+        public string FullName { get; set; } 
+        public string MobileNumber { get; set; }
     }
 }
