@@ -46,7 +46,9 @@ namespace BTechHaar.Data.Repository
                                   IsEmailVerified = s.EmailVerified,
                                   ErrorMessage = string.Empty,
                                   OTPText = GenerateRandomOTP(6, saAllowedCharacters),
-                                  UserId = s.UserId
+                                  UserId = s.UserId,
+                                  FullName = s.FullName,
+                                  MobileNumber = s.MobileNumber
                               }).FirstOrDefaultAsync();
 
             if (user == null)
