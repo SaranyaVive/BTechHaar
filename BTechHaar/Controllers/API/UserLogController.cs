@@ -2,6 +2,7 @@
 using BTechHaar.Main.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BTechHaar.Models.Models.API.Response;
 
 namespace BTechHaar.Main.Controllers.API
 {
@@ -21,8 +22,9 @@ namespace BTechHaar.Main.Controllers.API
         {
             try
             {
+                LogSaved logged = new LogSaved() { IsLogged = true };
                 await _userLogService.AddUserLog(request);
-                return Ok();
+                return Ok(logged);
 
             }
             catch (Exception ex)
@@ -37,8 +39,9 @@ namespace BTechHaar.Main.Controllers.API
         {
             try
             {
+                LogSaved logged = new LogSaved() { IsLogged = true };
                 await _userLogService.AddUserLogs(request);
-                return Ok();
+                return Ok(logged);
 
             }
             catch (Exception ex)

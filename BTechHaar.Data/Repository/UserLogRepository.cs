@@ -34,13 +34,12 @@ namespace BTechHaar.Data.Repository
             {
 
                 UserId = request.UserId,
-                LogDate = request.LogDate,
+                LogDate = DateTime.Parse(request.LogDate),
                 LogDescription = request.LogDescription,
                 LogType = request.LogType,
-                UserDeviceId = request.UserDeviceId,
-                FileName = request.FileName,
-                FileSize = request.FileSize,
-                Contact = request.Contact,
+                FileName = request.FileName ?? "-",
+                FileSize = request.FileSize ?? "-",
+                Contact = request.Contact ?? "-",
             };
 
             await _context.UserLogs.AddAsync(log);
@@ -56,13 +55,12 @@ namespace BTechHaar.Data.Repository
                 {
 
                     UserId = item.UserId,
-                    LogDate = item.LogDate,
+                    LogDate = DateTime.Parse(item.LogDate),
                     LogDescription = item.LogDescription,
                     LogType = item.LogType,
-                    UserDeviceId = item.UserDeviceId,
-                    FileName = item.FileName,
-                    FileSize = item.FileSize,
-                    Contact = item.Contact,
+                    FileName = item.FileName ?? "-",
+                    FileSize = item.FileSize ?? "-",
+                    Contact = item.Contact ?? "-",
                 };
                 newLogs.Add(log);
             }
@@ -75,16 +73,11 @@ namespace BTechHaar.Data.Repository
         public async Task<List<UserLogsVM>> GetUserLogs()
         {
             var logs = await (from s in _context.UserLogs
-                              join u in _context.Users on s.UserId equals u.UserId
-                              join d in _context.UserDevices on s.UserId equals d.UserId
-                              where s.UserDeviceId == d.UserId
+                              join u in _context.Users on s.UserId equals u.UserId  
                               select new UserLogsVM()
-                              {
-                                  UserDeviceId = d.UserDeviceId,
-                                  DeviceId = d.DeviceId,
+                              { 
                                   UserId = u.UserId,
-                                  Contact = s.Contact,
-                                  DeviceType = d.DeviceType,
+                                  Contact = s.Contact, 
                                   EmailID = u.EmailID,
                                   EmailVerified = u.EmailVerified,
                                   FileName = s.FileName,
