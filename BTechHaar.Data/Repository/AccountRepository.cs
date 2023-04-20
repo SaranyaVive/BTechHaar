@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BTechHaar.Data.Repository
@@ -34,6 +35,21 @@ namespace BTechHaar.Data.Repository
 
         public async Task<LoginResponse> CheckValidLogin(LoginRequest request)
         {
+            bool isMobile = false;
+
+            if(request.EmailID.Contains("@") && request.EmailID.Contains("."))
+            {
+                isMobile = false;
+            }
+            else
+            {
+                Regex validateNumberRegex = new Regex("^\\d+$");
+                if(validateNumberRegex.IsMatch(request.EmailID) && request.EmailID.Length >= 10)
+                {
+                    isMobile=true;
+                }
+            }
+
             var user = await (from s in _context.Users
                               join d in _context.UserDevices on s.UserId equals d.UserId
                               where // s.MPin == request.MPin && 
@@ -50,6 +66,26 @@ namespace BTechHaar.Data.Repository
                                   FullName = s.FullName,
                                   MobileNumber = s.MobileNumber
                               }).FirstOrDefaultAsync();
+
+            if (isMobile)
+            {
+                user = await (from s in _context.Users
+                              join d in _context.UserDevices on s.UserId equals d.UserId
+                              where // s.MPin == request.MPin && 
+                              s.MobileNumber == request.EmailID
+                              select new LoginResponse()
+                              {
+                                  EmailId = s.EmailID,
+                                  DeviceId = d.DeviceId,
+                                  IsValidUser = true,
+                                  IsEmailVerified = s.EmailVerified,
+                                  ErrorMessage = string.Empty,
+                                  OTPText = GenerateRandomOTP(6, saAllowedCharacters),
+                                  UserId = s.UserId,
+                                  FullName = s.FullName,
+                                  MobileNumber = s.MobileNumber
+                              }).FirstOrDefaultAsync();
+            }
 
             if (user == null)
             {
@@ -95,7 +131,8 @@ namespace BTechHaar.Data.Repository
                     EmailId = request.EmailID,
                     OTPText = GenerateRandomOTP(6, saAllowedCharacters),
                     ErrorMessage = "Email already exist. Verify with OTP",
-                    UserId = emailExist.FirstOrDefault().UserId
+                    UserId = emailExist.FirstOrDefault().UserId,
+                    MobileNumber = request.MobileNumber
                 };
             }
             var isMobileNumberExist = users.Where(x => x.MobileNumber == request.MobileNumber).Any();
@@ -122,7 +159,8 @@ namespace BTechHaar.Data.Repository
                 {
                     OTPText = GenerateRandomOTP(6, saAllowedCharacters),
                     EmailId = request.EmailID,
-                    UserId = isEmailNotVerified.UserId
+                    UserId = isEmailNotVerified.UserId,
+                    MobileNumber = request.MobileNumber
                 };
             }
             Users newUser = new Users()
@@ -151,6 +189,7 @@ namespace BTechHaar.Data.Repository
             {
                 EmailId = request.EmailID,
                 OTPText = GenerateRandomOTP(6, saAllowedCharacters),
+                MobileNumber = request.MobileNumber,
                 UserId = newUser.UserId,
             };
 

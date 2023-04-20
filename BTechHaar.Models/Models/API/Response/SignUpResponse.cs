@@ -8,6 +8,7 @@
         public int? UserId { get; set; }
         public bool IsEmailVerified { get; set; } = false;
         public string ErrorEmail { get; set; }
+        public string MobileNumber { get; set; }
 
     }
 }
