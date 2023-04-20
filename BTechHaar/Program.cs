@@ -30,6 +30,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserLogRepository, UserLogRepository>();
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailConfig"));
+builder.Services.Configure<User>(builder.Configuration.GetSection("UserConfig"));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -63,7 +64,7 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Authenticate}/{id?}");
 
 //app.MapRazorPages();
 
