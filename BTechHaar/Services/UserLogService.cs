@@ -10,6 +10,7 @@ namespace BTechHaar.Main.Services
         Task AddUserLogs(List<UserLogRequest> request);
         Task<List<UserLogsVM>> GetUserLogs();
         Task<List<UserLogsVM>> GetUserLogs(int userId);
+        Task<List<UserVM>> GetUserList();
     }
 
     public class UserLogService : IUserLogService
@@ -39,6 +40,11 @@ namespace BTechHaar.Main.Services
         public async Task<List<UserLogsVM>> GetUserLogs(int userId)
         {
             return await _userLogRepository.GetUserLogs(userId); 
+        }
+
+        public async Task<List<UserVM>> GetUserList()
+        {
+            return await _userLogRepository.GetUserList();
         }
     }
 }

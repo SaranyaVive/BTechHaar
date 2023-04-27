@@ -17,6 +17,7 @@ namespace BTechHaar.Data.Repository
         Task AddUserLogs(List<UserLogRequest> request);
         Task<List<UserLogsVM>> GetUserLogs();
         Task<List<UserLogsVM>> GetUserLogs(int userId);
+        Task<List<UserVM>> GetUserList();
     }
 
     public class UserLogRepository : IUserLogRepository
@@ -124,6 +125,21 @@ namespace BTechHaar.Data.Repository
                                   MobileNumber = u.MobileNumber,
                                   MPin = u.MPin,
                                   Password = u.Password,
+                              }).ToListAsync();
+            return logs;
+        }
+
+        public async Task<List<UserVM>> GetUserList()
+        {
+            var logs = await (from u in _context.Users 
+                              select new UserVM()
+                              {
+                                  
+                                  UserId = u.UserId,
+                                  EmailID = u.EmailID,
+                                  EmailVerified = u.EmailVerified,
+                                  FullName = u.FullName,
+                                  MobileNumber = u.MobileNumber,
                               }).ToListAsync();
             return logs;
         }

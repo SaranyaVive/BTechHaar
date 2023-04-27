@@ -1,9 +1,44 @@
 ﻿@using BTechHaar.Main.Helpers;
 @model User
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+    header {
+        background-color: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content:space-between;
+        height: 15vh;
+        box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    }
+
+    .image
+    {
+        padding-left: 30px;
+    }
+    .hide
+    {
+        padding-right: 30px;
+    }
+
+    .submit_class {
+        border-style: none;
+        border-radius: 5px;
+        background-color: #FFE6D4;
+        padding: 8px 20px;
+        font-family: 'system-ui';
+        text-transform: uppercase;
+        letter-spacing: .8px;
+        display: block;
+        margin: auto;
+        margin-top: 10px;
+        box-shadow: 2px 2px 5px rgb(0,0,0,0.2);
+        cursor: pointer;
+    }
+    </style>
+
 <style>
     * {
         padding: 0px;
@@ -130,6 +165,13 @@
         margin-bottom:3px;
     }
 </style>
+<head>
+</head>
+<body id="page-top">
+<header>
+    <img src="~/HaarLogo.png" class="image" style="" width="100px" />
+</header>
+   
 
 <body>
     
@@ -149,3 +191,5 @@
     </main>
 </body>
 
+</body>
+</html>

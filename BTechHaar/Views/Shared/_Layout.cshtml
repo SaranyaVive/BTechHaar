@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@*<!DOCTYPE html>
 <html lang="en">
     <style>
     header {
@@ -56,4 +56,121 @@
         $('.hide').css("display", "show");
         }
 </script>
+</html>*@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Transfer</title>
+    <!-- base:css -->
+    <link href="~/css/vendor.bundle.base.css" rel="stylesheet" />
+    <link href="~/css/materialdesignicons.min.css" rel="stylesheet" />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/chart.css" rel="stylesheet" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/haarlogo.png" />
+</head>
+<body>
+    <div class="container-scroller d-flex">
+        <!-- partial:./partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item sidebar-category">
+                    <p>Navigation</p>
+                    <span></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Dashboard">
+                        <i class="mdi mdi-view-quilt menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/UserList">
+                        <i class="mdi mdi-view-headline menu-icon"></i>
+                        <span class="menu-title">User View</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Index">
+                        <i class="mdi mdi-view-headline menu-icon"></i>
+                        <span class="menu-title">Transfer List</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:./partials/_navbar.html -->
+            <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                    <div class="navbar-brand-wrapper">
+                        <a class="navbar-brand brand-logo" href="index.html"><img src="~/haarlogo.png" class="imgclass" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/haarlogo.png" alt="logo" /></a>
+                    </div>
+                    <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back</h4>
+                    <ul class="navbar-nav navbar-nav-right">
+                        <li class="nav-item dropdown mr-1">
+                            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="/Home/Authenticate" data-toggle="dropdown">
+                                <i class="mdi mdi-logout mx-0"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                </div>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                @RenderBody();
+                <!-- content-wrapper ends -->
+                <!-- partial:./partials/_footer.html -->
+                <footer class="footer">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+                                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
+                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="~/Scripts/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="~/Scripts/Chart.min.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/Scripts/off-canvas.js"></script>
+    <script src="~/Scripts/hoverable-collapse.js"></script>
+    <script src="~/Scripts/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="~/Scripts/dashboard.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
 </html>

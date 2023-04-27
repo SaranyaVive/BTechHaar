@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using BTechHaar.Main.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.Options;
+using System.Diagnostics.Metrics;
+using System.Text.RegularExpressions;
 
 namespace BTechHaar.Main.Controllers.Web
 {
@@ -42,6 +44,34 @@ namespace BTechHaar.Main.Controllers.Web
                 ModelState.AddModelError("", "Invalid login.");
                 return View(user);
             }
+        }
+
+        public async Task<IActionResult> UserList()
+        {
+            List<UserVM> logs = new List<UserVM>();
+            logs = await _userLogService.GetUserList();
+            return View(logs);
+        }
+
+        public async Task<IActionResult> Dashboard()
+        {
+            DashboardVM dashboard = new DashboardVM();
+            var logs = await _userLogService.GetUserLogs();
+            dashboard.logCountVM = logs.GroupBy(n => n.LogDate)
+                         .Select(n => new LogCountVM
+                         {
+                             LogDate = n.Key,
+                             LogCount = n.Count()
+                         })
+                         .OrderBy(n => n.LogDate).ToList();
+            dashboard.userCountVM = logs.GroupBy(n => n.LogDate)
+                         .Select(n => new UserCountVM
+                         {
+                             LogDate = n.Key,
+                             LogCount = n.Count()
+                         })
+                         .OrderBy(n => n.LogDate).ToList();
+            return View(dashboard);
         }
     }
 }
